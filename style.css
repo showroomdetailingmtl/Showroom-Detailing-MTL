@@ -1122,7 +1122,7 @@ GALLERY
 
     height:100%;
 
-    object-fit:cover;
+    object-fit:contain;
 
     transition:.6s;
 
