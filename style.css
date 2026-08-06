@@ -1082,61 +1082,93 @@ GALLERY
 
 }
 
+/*==================================================
+BENTO GALLERY
+==================================================*/
+
 .gallery-layout{
 
     display:grid;
 
-    grid-template-columns:2fr 1fr 1fr;
+    grid-template-columns:2fr 1fr;
 
-    grid-auto-rows:340px;
+    grid-template-rows:260px 260px 260px;
 
     gap:20px;
 
 }
 
-.gallery-large{
+.gallery-item{
 
-    grid-row:span 2;
-
-}
-
-.gallery-wide{
-
-    grid-column:span 2;
-
-}
-
-.gallery-layout div{
+    position:relative;
 
     overflow:hidden;
 
     border-radius:24px;
 
-    position:relative;
+}
+
+.large{
+
+    grid-column:1;
+
+    grid-row:1 / span 2;
 
 }
 
-.gallery-layout img{
+.top{
+
+    grid-column:2;
+
+    grid-row:1;
+
+}
+
+.middle{
+
+    grid-column:2;
+
+    grid-row:2;
+
+}
+
+.bottom-left{
+
+    grid-column:1;
+
+    grid-row:3;
+
+}
+
+.bottom-right{
+
+    grid-column:2;
+
+    grid-row:3;
+
+}
+
+.gallery-item img{
 
     width:100%;
 
     height:100%;
 
-    object-fit:contain;
+    object-fit:cover;
 
-    transition:.6s;
+    display:block;
 
-    cursor:pointer;
-
-}
-
-.gallery-layout div:hover img{
-
-    transform:scale(1.08);
+    transition:transform .6s;
 
 }
 
-.gallery-layout div::after{
+.gallery-item:hover img{
+
+    transform:scale(1.02);
+
+}
+
+.gallery-item::after{
 
     content:"";
 
@@ -1153,7 +1185,7 @@ GALLERY
 
 }
 
-.gallery-layout div:hover::after{
+.gallery-item:hover::after{
 
     background:rgba(212,175,55,.12);
 
