@@ -1060,6 +1060,11 @@ SERVICES
 
     transition:.35s;
 
+    position: relative;
+    
+    z-index: 10;
+    
+    pointer-events: auto;
 }
 
 .service-button:hover{
@@ -1768,4 +1773,12 @@ header.scrolled{
         opacity: 1;
         transform: translateY(0);
     }
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+#quote {
+    scroll-margin-top: 100px;
 }
