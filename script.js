@@ -3,53 +3,24 @@
 // Luxury Website Script
 // ==========================================
 
-// Smooth scrolling for navigation
 
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-
-    anchor.addEventListener("click", function(e){
-
-        e.preventDefault();
-
-        const target = document.querySelector(this.getAttribute("href"));
-
-        if(target){
-
-            target.scrollIntoView({
-
-                behavior:"smooth",
-
-                block:"start"
-
-            });
-
-        }
-
-    });
-
-});
 // ==========================================
-// SHOWROOM DETAILING MTL
-// Luxury Website Script
-// ==========================================
-
 // Smooth Scrolling
+// ==========================================
+
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 
-    anchor.addEventListener("click", function(e){
+    anchor.addEventListener("click", function(e) {
 
         e.preventDefault();
 
         const target = document.querySelector(this.getAttribute("href"));
 
-        if(target){
+        if (target) {
 
             target.scrollIntoView({
-
-                behavior:"smooth",
-
-                block:"start"
-
+                behavior: "smooth",
+                block: "start"
             });
 
         }
@@ -57,6 +28,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 
 });
+
 
 // ==========================================
 // Sticky Navbar Effect
@@ -66,17 +38,19 @@ const navbar = document.querySelector("header");
 
 window.addEventListener("scroll", () => {
 
-    if(window.scrollY > 50){
+    if (window.scrollY > 50) {
 
         navbar.classList.add("scrolled");
 
-    }else{
+    } else {
 
         navbar.classList.remove("scrolled");
 
     }
 
 });
+
+
 // ==========================================
 // Scroll Reveal Animation
 // ==========================================
@@ -108,6 +82,8 @@ function revealOnScroll() {
 window.addEventListener("scroll", revealOnScroll);
 
 revealOnScroll();
+
+
 // ==========================================
 // Language Buttons
 // ==========================================
@@ -132,63 +108,159 @@ enBtn.addEventListener("click", () => {
     frBtn.classList.remove("active");
 
     changeLanguage("en");
+
     localStorage.setItem("language", "en");
 
 });
+
+
 // ==========================================
 // Change Website Language
 // ==========================================
 
-function changeLanguage(language){
+function changeLanguage(language) {
 
-    // Translate text
     document.querySelectorAll(".translate").forEach(element => {
 
-        // Remove animation class
         element.classList.remove("language-switch");
 
-        // Force browser to restart the animation
         void element.offsetWidth;
 
-        // Change the language
         element.textContent = element.dataset[language];
 
-        // Play the animation
         element.classList.add("language-switch");
 
     });
 
+
     // Translate placeholders
+
     document.querySelectorAll("[data-placeholder-fr]").forEach(input => {
-        input.placeholder = input.dataset[`placeholder${language.charAt(0).toUpperCase() + language.slice(1)}`];
+
+        input.placeholder =
+            input.dataset[
+                `placeholder${language.charAt(0).toUpperCase() + language.slice(1)}`
+            ];
+
     });
 
+
     // Translate select options
+
     document.querySelectorAll("option[data-fr]").forEach(option => {
+
         option.textContent = option.dataset[language];
+
     });
 
 }
+
+
 // ==========================================
 // Remember Selected Language
 // ==========================================
 
 const savedLanguage = localStorage.getItem("language");
 
-if(savedLanguage){
+if (savedLanguage) {
 
     changeLanguage(savedLanguage);
 
-    if(savedLanguage === "fr"){
+    if (savedLanguage === "fr") {
 
         frBtn.classList.add("active");
         enBtn.classList.remove("active");
 
-    }else{
+    } else {
 
         enBtn.classList.add("active");
         frBtn.classList.remove("active");
 
     }
+
+}
+
+
+// ==========================================
+// QUOTE FORM - AJAX SUBMISSION
+// ==========================================
+
+const quoteForm = document.querySelector(".quote-form");
+const thankYouPopup = document.getElementById("thank-you-popup");
+
+if (quoteForm && thankYouPopup) {
+
+    quoteForm.addEventListener("submit", async function(e) {
+
+        // STOP the normal FormSubmit page redirect
+        e.preventDefault();
+        e.stopPropagation();
+
+        const formData = new FormData(quoteForm);
+
+        const formAction = quoteForm.getAttribute("action");
+
+        const ajaxAction = formAction.replace(
+            "https://formsubmit.co/",
+            "https://formsubmit.co/ajax/"
+        );
+
+        try {
+
+            const response = await fetch(ajaxAction, {
+
+                method: "POST",
+
+                headers: {
+                    "Accept": "application/json"
+                },
+
+                body: formData
+
+            });
+
+            const data = await response.json();
+
+            console.log("FormSubmit response:", data);
+
+
+            // ==========================================
+            // SUCCESS
+            // ==========================================
+
+            if (response.ok && (data.success === true || data.success === "true")) {
+
+                quoteForm.reset();
+
+                thankYouPopup.classList.add("show");
+
+
+                // Fade away after 4 seconds
+
+                setTimeout(() => {
+
+                    thankYouPopup.classList.remove("show");
+
+                }, 4000);
+
+
+            } else {
+
+                console.error("FormSubmit error:", data);
+
+                alert("Something went wrong. Please try again.");
+
+            }
+
+
+        } catch (error) {
+
+            console.error("Submission error:", error);
+
+            alert("Something went wrong. Please try again.");
+
+        }
+
+    });
 
 }

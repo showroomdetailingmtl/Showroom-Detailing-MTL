@@ -1782,3 +1782,60 @@ html {
 #quote {
     scroll-margin-top: 100px;
 }
+
+/* ==========================================
+   THANK YOU POPUP
+========================================== */
+
+.thank-you-popup {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(8px);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    opacity: 0;
+    visibility: hidden;
+
+    transition: opacity 0.6s ease, visibility 0.6s ease;
+
+    z-index: 9999;
+}
+
+.thank-you-popup.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.thank-you-content {
+    width: min(500px, 90%);
+    padding: 50px 40px;
+
+    background: #111;
+    border: 1px solid #d4a923;
+    border-radius: 20px;
+
+    text-align: center;
+
+    transform: translateY(20px);
+    transition: transform 0.6s ease;
+}
+
+.thank-you-popup.show .thank-you-content {
+    transform: translateY(0);
+}
+
+.thank-you-content h2 {
+    color: #d4a923;
+    font-size: 36px;
+    margin-bottom: 15px;
+}
+
+.thank-you-content p {
+    color: #fff;
+    font-size: 17px;
+    line-height: 1.6;
+}
